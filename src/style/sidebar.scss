@@ -1,0 +1,12 @@
+.sidebars {
+    .is-active {
+        background-color: #42588a;
+        color: #fff;
+    }
+    .el-menu {
+        border: none;
+    }
+    .el-menu--collapse{
+        width:0px !important;
+    }
+}

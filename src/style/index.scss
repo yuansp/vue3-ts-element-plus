@@ -1,0 +1,21 @@
+@import './sidebar.scss';
+@import './topbar.scss';
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.appmain {
+    background-color: aqua;
+}
+
+.el-header {
+    --el-header-padding: 0;
+    --el-header-height: 58px;
+    padding: 0;
+}
+
+.el-main {
+    --el-main-padding: 5px 0 0 10px;
+}
