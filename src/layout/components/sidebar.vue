@@ -97,7 +97,6 @@ export default defineComponent({
     );
     const handleSelect = (key: string) => {
       activeindex.value = key;
-      console.log(key);
       $router.push(key);
     };
     return {
