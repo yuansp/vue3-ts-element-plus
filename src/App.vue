@@ -1,30 +1,50 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view/>
+  <el-container>
+    <el-header>
+      <topbar-vue />
+    </el-header>
+    <el-container>
+      <el-aside :class="{'sidebarhide':!sidebarshow,'sidebarshow':sidebarshow}">
+        <sidebar-vue v-show="sidebarshow" />
+      </el-aside>
+      <el-main>
+        <router-view />
+      </el-main>
+    </el-container>
+  </el-container>
 </template>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script lang="ts">
+import { watch, defineComponent,ref } from "vue";
+import sidebarVue from "./layout/components/sidebar.vue";
+import topbarVue from "./layout/components/topbar.vue";
+import store from "@/store";
+export default defineComponent({
+  components: {
+    sidebarVue,
+    topbarVue,
+  },
+  setup() {
+    let sidebarshow = ref(false);
+    watch(
+      () => store.getters.shows,
+      (val) => {
+        sidebarshow.value = !val;
+      }
+    );
+    return {
+      sidebarshow,
+    };
+  },
+});
+</script>
+<style lang="scss" scoped>
+.sidebarhide {
+    width: 0px;
 }
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.sidebarshow {
+    width: 200px;
+    height: calc(100vh - 58px);
+    background: #000;
 }
 </style>
