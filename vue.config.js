@@ -1,13 +1,14 @@
 const path = require('path');
-const AutoImport = require('unplugin-auto-import/webpack')
-const Components = require('unplugin-vue-components/webpack')
-const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
+const AutoImport = require('unplugin-auto-import/dist/webpack')
+const Components = require('unplugin-vue-components/dist/webpack')
+const { ElementPlusResolver } = require('unplugin-vue-components/dist/resolvers')
+
 function resolve(dir) {
     return path.join(__dirname, dir)
-  }
-  const port = 8081;
+}
+const port = 8081;
 
-  module.exports = {
+module.exports = {
     publicPath: '/',
     outputDir: 'dist',
     assetsDir: 'static',
@@ -22,13 +23,13 @@ function resolve(dir) {
         },
         proxy: {
             '/api': {
-                target: 'http://192.168.2.151:8081/',
+                target: 'http://localhost:8081/',
                 changeOrigin: true,
             }
         }
     },
     configureWebpack: {
-      name: 'vue3-ts',
+        name: 'vue3-ts',
         resolve: {
             alias: {
                 '@': resolve('src')
@@ -36,25 +37,25 @@ function resolve(dir) {
         },
         plugins: [
             AutoImport({
-              resolvers: [ElementPlusResolver()],
+                resolvers: [ElementPlusResolver()],
             }),
             Components({
-              resolvers: [ElementPlusResolver()],
+                resolvers: [ElementPlusResolver()],
             }),
-          ]
+        ]
     },
     chainWebpack: config => {
-      config.module.rules.delete("svg"); // 重点:删除默认配置中处理svg,
-      config.module
-        .rule('svg-sprite-loader')
-        .test(/\.svg$/)
-        .include
-        .add(resolve('src/assets/icon')) // 处理svg目录
-        .end()
-        .use('svg-sprite-loader')
-        .loader('svg-sprite-loader')
-        .options({
-          symbolId: 'icon-[name]'
-        })
+        config.module.rules.delete("svg"); // 重点:删除默认配置中处理svg,
+        config.module
+            .rule('svg-sprite-loader')
+            .test(/\.svg$/)
+            .include
+            .add(resolve('src/assets/icon')) // 处理svg目录
+            .end()
+            .use('svg-sprite-loader')
+            .loader('svg-sprite-loader')
+            .options({
+                symbolId: 'icon-[name]'
+            })
     },
-  }      
+}
