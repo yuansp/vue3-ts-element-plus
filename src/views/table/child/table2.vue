@@ -2,7 +2,7 @@
   <list-head :adduser="adduser"></list-head>
   <list :listdata="data" :deldata="deldata" :changeStatus="changeStatus">
   </list>
-  <list-foot :dataLength="nums" :canlselect="canlselect"></list-foot>
+  <list-foot :listdata="data" :dataLength="nums" :canlselect="canlselect"></list-foot>
 </template>
 <script lang='ts'>
 import { defineComponent, reactive, ref, toRefs,watchEffect } from "vue";

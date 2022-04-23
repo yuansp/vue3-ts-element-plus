@@ -1,12 +1,14 @@
 <template>
   <div>
-    选中{{ dataLength.checkLength }}/{{ dataLength.dataLength }}
+    <input type="checkbox">
+    选中{{ cunt}}/全部{{ listdata.length }}
     <el-button @click="qx">取消选中</el-button>
   </div>
 </template>
 <script lang='ts'>
 import { ElButton } from "element-plus";
-import { defineComponent } from "vue";
+import { defineComponent, computed } from "vue";
+import { datalist } from "@/stype/stype";
 export default defineComponent({
   components: {
     ElButton,
@@ -19,14 +21,22 @@ export default defineComponent({
     canlselect:{
       type:Function,
       required:true
+    },
+    listdata:{
+      type:Array as () => datalist [],
+      required:true
     }
   },
   setup(props){
     const qx = ()=>{
       props.canlselect()
     }
+    const cunt = computed(()=>{
+      return props.listdata.reduce((prv,listdata,index)=>prv+(listdata.checked?1:0),0)
+    })
     return{
-      qx
+      qx,
+      cunt
     }
   }
 });
