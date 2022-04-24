@@ -2,7 +2,7 @@
   <list-head :adduser="adduser"></list-head>
   <list :listdata="data" :deldata="deldata" :changeStatus="changeStatus">
   </list>
-  <list-foot :listdata="data" :dataLength="nums" :canlselect="canlselect"></list-foot>
+  <list-foot :listdata="data" :dataLength="nums" :delselect="delselect" :selectAll="selectAll"></list-foot>
 </template>
 <script lang='ts'>
 import { defineComponent, reactive, ref, toRefs,watchEffect } from "vue";
@@ -84,6 +84,14 @@ export default defineComponent({
       nums.dataLength = listdata.data.length;
       nums.checkLength = checkNum(listdata.data);
     });
+    const selectAll = (val:boolean)=>{
+      listdata.data.forEach(item=>{
+        item.checked = val
+      })
+    }
+    const delselect = ()=>{
+      listdata.data=listdata.data.filter(item=>!item.checked)
+    }
     return {
       ...toRefs(listdata),
       adduser,
@@ -91,6 +99,8 @@ export default defineComponent({
       deldata,
       nums,
       canlselect,
+      selectAll,
+      delselect,
     };
   },
 });
