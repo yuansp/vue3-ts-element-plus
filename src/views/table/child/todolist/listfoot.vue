@@ -36,13 +36,14 @@ export default defineComponent({
       props.delselect()
     }
     const cunt = computed(()=>{
-      return props.listdata.reduce((prv,listdata,index)=>prv+(listdata.checked?1:0),0)
+      return props.listdata.reduce((prv,listdata
+      )=>prv+(listdata.checked?1:0),0)
     })
     const selects = computed({
       get(){
         return (cunt.value>0 && cunt.value === props.listdata.length)
       },
-      set(val){
+      set(val:boolean){
         props.selectAll(val)
       }
     })

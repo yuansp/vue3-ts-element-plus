@@ -23,8 +23,7 @@
   </div>
 </template>
 <script lang='ts'>
-import { consumers } from "stream";
-import { defineComponent, onMounted } from "vue";
+import { defineComponent } from "vue";
 import GaugeChart from "./echarts/gauge.vue";
 import LineChart from "./echarts/line1.vue";
 import PictorialBar from "./echarts/pictorialBar.vue";

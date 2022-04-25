@@ -33,7 +33,6 @@ export default defineComponent({
       CanvasRenderer,
     ]);
     const mychart = ref<HTMLElement | null>(null);
-    let num = ref(0);
     onMounted(() => {
       const myCharts = ref<any>();
       myCharts.value = echarts.init(mychart.value!);
@@ -66,7 +65,7 @@ export default defineComponent({
         });
       };
       setopinion();
-     const timer= setInterval(setopinion, 3000);
+     setInterval(setopinion, 3000);
     });
 
     return {
