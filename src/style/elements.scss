@@ -1,0 +1,23 @@
+.el-check-tag.is-checked {
+    background-color: #2f6bc5;
+    color: #fff;
+    .checktd{
+        display: block;
+    }
+}
+.el-check-tag.is-checked:hover{
+    color: #999;
+}
+.el-check-tag{
+    border: 1px solid #ccc;
+}
+.checktd{
+    display: none;
+    position: absolute;
+    top:50%;
+    left:-5px;
+    transform: translate(0,-50%);
+    width: 30px !important;
+    height: 30px !important;
+    color:#fff;
+}

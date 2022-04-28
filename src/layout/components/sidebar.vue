@@ -27,18 +27,15 @@
           <template #title>
             <svg-icon :icon-class="item.meta.icon"></svg-icon>
             <span class="meutitle">{{ item.meta.title }}</span>
-            </template>
+          </template>
           <el-menu-item-group
             v-for="item1 in item.children"
             :key="topPath + '/' + item1.path"
           >
-            <el-menu-item
-              :index="topPath + '/' + item.path + '/' + item1.path"
-              >
+            <el-menu-item :index="topPath + '/' + item.path + '/' + item1.path">
               <svg-icon :icon-class="item.meta.icon"></svg-icon>
               <span class="meutitle">{{ item1.meta.title }}</span>
-              </el-menu-item
-            >
+            </el-menu-item>
           </el-menu-item-group>
         </el-sub-menu>
       </template>
@@ -48,7 +45,7 @@
 <script lang='ts'>
 import { ElMenu, ElMenuItem, ElSubMenu } from "element-plus";
 import { defineComponent, watch, reactive, ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { tRouters } from "@/stype/stype";
 import store from "@/store";
 export default defineComponent({
@@ -60,6 +57,7 @@ export default defineComponent({
   setup() {
     const ctransition = ref(true);
     const $router = useRouter();
+    const route = useRoute();
     let activeindex = ref("");
     let datas: tRouters[] = reactive([]);
     let collapse = ref(true);
@@ -68,6 +66,11 @@ export default defineComponent({
     watch(
       () => $router.currentRoute.value.path,
       (val) => {
+        const tagObj = reactive({
+          path: route.fullPath,
+          meta: route.meta,
+        });
+        store.dispatch("addView", tagObj);
         datas.length = 0;
         topPath.value = "/" + val.split("/")[1];
         store.getters.sidebarlist.forEach((item: any) => {
@@ -115,7 +118,7 @@ export default defineComponent({
   width: 200px;
   min-height: 400px;
 }
-.meutitle{
+.meutitle {
   margin-left: 5px;
 }
 </style>
