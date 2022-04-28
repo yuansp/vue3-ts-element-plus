@@ -2,7 +2,7 @@
   <div ref="mychart" style="width: 100%; height: 45vh"></div>
 </template>
 <script lang='ts'>
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref, onMounted, onUnmounted } from "vue";
 // 引入 echarts 核心模块，核心模块提供了 echarts 使用必须要的接口。
 import * as echarts from "echarts/core";
 // 引入柱状图图表，图表后缀都为 Chart
@@ -33,6 +33,8 @@ export default defineComponent({
       CanvasRenderer,
     ]);
     const mychart = ref<HTMLElement | null>(null);
+
+    let timer: any = null;
     onMounted(() => {
       const myCharts = ref<any>();
       myCharts.value = echarts.init(mychart.value!);
@@ -64,10 +66,12 @@ export default defineComponent({
           ],
         });
       };
+      timer = setInterval(setopinion, 3000);
       setopinion();
-     setInterval(setopinion, 3000);
     });
-
+    onUnmounted(() => {
+      clearInterval(timer);
+    });
     return {
       mychart,
     };

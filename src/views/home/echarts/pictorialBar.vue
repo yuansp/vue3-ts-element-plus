@@ -2,7 +2,7 @@
   <div ref="mychart" style="width: 100%; height: 40vh"></div>
 </template>
 <script lang='ts'>
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref, onMounted, onUnmounted } from "vue";
 
 import * as echarts from "echarts/core";
 import {
@@ -182,23 +182,25 @@ export default defineComponent({
       makeOption("pictorialBar", "diamond"),
     ];
     const mychart = ref<HTMLElement | null>(null);
+
+    let timer: any = null;
     onMounted(() => {
       const myCharts = ref<any>();
       myCharts.value = echarts.init(mychart.value!);
       var option: EChartsOption;
       var optionIndex = 0;
       option = options[optionIndex];
-
       const setopinions = () => {
         optionIndex = (optionIndex + 1) % options.length;
         myCharts.value.setOption(options[optionIndex]);
       };
+      timer = setInterval(setopinions, 8000);
       setopinions();
-      setInterval(setopinions, 8000);
-
       option && myCharts.value.setOption(option);
     });
-
+    onUnmounted(() => {
+      clearInterval(timer);
+    });
     return {
       mychart,
     };
