@@ -20,11 +20,11 @@
   </el-menu>
 </template>
 <script lang='ts'>
-import { defineComponent, reactive, ref, watch } from "vue";
+import { defineComponent, ref, watch } from "vue";
 import { ElMenu, ElMenuItem } from "element-plus";
-import { useRouter,RouteRecordRaw } from "vue-router";
-import store from "@/store/index";
+import { useRouter } from "vue-router";
 import { tRouters } from "@/stype/stype";
+import getsidebar from "./hook/sidebar";
 export default defineComponent({
   components: {
     ElMenu,
@@ -34,7 +34,7 @@ export default defineComponent({
     const $router = useRouter();
     const allRouters = $router.getRoutes();
     let arr: tRouters[] = [];
-    allRouters.forEach(item => {
+    allRouters.forEach((item) => {
       let L = item.path.split("/");
       if (L.length === 2 && L[1] !== "") {
         let obj: tRouters = item;
@@ -45,28 +45,28 @@ export default defineComponent({
     watch(
       () => $router.currentRoute.value.path,
       (val) => {
-        let path ='/'+ val.split("/")[1];
-        activeIndex2.value=path
+        let path = "/" + val.split("/")[1];
+        activeIndex2.value = path;
       }
     );
     const handleSelect = (key: string) => {
       activeIndex2.value = key;
       $router.push(key);
-      getsidebar(key);
+      getsidebar(key, allRouters);
     };
-    const getsidebar = (key: string) => {
-      let sidebarlist=reactive<{data:RouteRecordRaw[]}>({
-        data: [],
-      });
-      allRouters.forEach((item) => {
-        if (item.path === key) {
-          if(item.children.length>0){
-            sidebarlist.data=item.children;
-          }
-        }
-      });
-      store.dispatch("setSidebarList", sidebarlist.data);
-    };
+    // const getsidebar = (key: string) => {
+    //   let sidebarlist=reactive<{data:RouteRecordRaw[]}>({
+    //     data: [],
+    //   });
+    //   allRouters.forEach((item) => {
+    //     if (item.path === key) {
+    //       if(item.children.length>0){
+    //         sidebarlist.data=item.children;
+    //       }
+    //     }
+    //   });
+    //   store.dispatch("setSidebarList", sidebarlist.data);
+    // };
     return {
       arr,
       activeIndex2,
