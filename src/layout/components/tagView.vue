@@ -1,6 +1,17 @@
 <template>
   <div class="tagegroup">
-    <svg-icon icon-class="expand" class="expand"></svg-icon>
+    <svg-icon
+      v-if="sidebarshow"
+      icon-class="expand"
+      class="expand"
+      @click="openSidebar(sidebarshow)"
+    ></svg-icon>
+    <svg-icon
+      v-else
+      icon-class="fold"
+      class="expand"
+      @click="openSidebar(sidebarshow)"
+    ></svg-icon>
     <transition-group
       appear
       name="animate__animated animate__bounce"
@@ -51,6 +62,9 @@ export default defineComponent({
     const tages: any = computed<any>(() => {
       return store.getters.tages;
     });
+    const sidebarshow = computed<boolean>(() => {
+      return store.getters.shows;
+    });
     const topath = (path: string) => {
       router.push(path);
       const allRouters = router.getRoutes();
@@ -85,12 +99,18 @@ export default defineComponent({
         store.dispatch("removeView", tages.value[index]);
       }
     };
+    const openSidebar = (sidebarshow: boolean) => {
+      if (store.getters.sidebarlist.length === 0) return;
+      store.dispatch("changeShow", !sidebarshow);
+    };
     return {
       tages,
       route,
       router,
+      sidebarshow,
       topath,
       closemeu,
+      openSidebar,
     };
   },
 });
