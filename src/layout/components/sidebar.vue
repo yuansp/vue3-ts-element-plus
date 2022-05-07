@@ -7,7 +7,6 @@
       text-color="#fff"
       :collapse="collapse"
       :collapse-transition="false"
-      @select="handleSelect"
     >
       <template v-for="item in datas">
         <el-menu-item
@@ -15,8 +14,10 @@
           :key="topPath + '/' + item.path"
           :index="topPath + '/' + item.path"
         >
-          <svg-icon :icon-class="item.meta.icon"></svg-icon>
-          <span class="meutitle">{{ item.meta.title }}</span>
+          <router-link :to="{ name: item.name }" class="menuitems">
+            <svg-icon :icon-class="item.meta.icon"></svg-icon>
+            <span class="meutitle">{{ item.meta.title }}</span>
+          </router-link>
         </el-menu-item>
 
         <el-sub-menu
@@ -33,8 +34,10 @@
             :key="topPath + '/' + item1.path"
           >
             <el-menu-item :index="topPath + '/' + item.path + '/' + item1.path">
-              <svg-icon :icon-class="item.meta.icon"></svg-icon>
-              <span class="meutitle">{{ item1.meta.title }}</span>
+              <router-link :to="{ name: item1.name }" class="menuitems">
+                <svg-icon :icon-class="item.meta.icon"></svg-icon>
+                <span class="meutitle">{{ item1.meta.title }}</span>
+              </router-link>
             </el-menu-item>
           </el-menu-item-group>
         </el-sub-menu>
@@ -98,27 +101,26 @@ export default defineComponent({
         activeindex.value = val;
       }
     );
-    const handleSelect = (key: string) => {
-      activeindex.value = key;
-      $router.push(key);
-    };
     return {
       datas, //菜单数据
       activeindex, //当前路由
       collapse, //是否收起
       ctransition, //是否收起
       topPath, //顶部路由
-      handleSelect, //点击菜单
     };
   },
 });
 </script>
-<style>
+<style scoped>
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
   min-height: 400px;
 }
 .meutitle {
   margin-left: 5px;
+}
+.menuitems {
+  color: #fff;
+  text-decoration: none;
 }
 </style>
