@@ -120,6 +120,7 @@ export default defineComponent({
   margin-left: 5px;
 }
 .menuitems {
+  width: 100%;
   color: #fff;
   text-decoration: none;
 }
