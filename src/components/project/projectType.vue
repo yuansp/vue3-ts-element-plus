@@ -45,6 +45,6 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .widths{
-  width: 50%;
+  width: 40%;
 }
 </style>
