@@ -1,9 +1,9 @@
 <template>
   <el-select
     class="m-2 widths"
-    size="large"
     v-model="value"
     placeholder="请选择，必填"
+    @change="select"
   >
     <el-option
       v-for="item in data"
@@ -23,7 +23,13 @@ export default defineComponent({
   components: {
     ElSelect,
   },
-  setup() {
+  props: {
+    selectType: {
+      type: Function,
+      required: true,
+    },
+  },
+  setup(props) {
     const value = ref("");
     const options = reactive<{ data: projectType[] }>({
       data: [],
@@ -36,9 +42,17 @@ export default defineComponent({
     onMounted(() => {
       getData();
     });
+    const select = (val: number) => {
+      options.data.forEach((item) => {
+        if (item.id === val) {
+          props.selectType(item);
+        }
+      });
+    };
     return {
       value,
       ...toRefs(options),
+      select,
     };
   },
 });
