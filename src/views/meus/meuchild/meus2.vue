@@ -9,12 +9,13 @@
           <div class="rows">
             <span class="titles">合同类型：</span>
             <span>
-              <ProjectType :selectType="selectType"/>
+              <ProjectType :selectType="selectType" />
             </span>
           </div>
           <div class="rows">
             <span class="titles">项目名称：</span>
-            <el-input type="text" disabled class="W40 showProjects" placeholder="请选择"></el-input>
+            <el-input v-model="formData.projectName" type="text" disabled class="W40 showProjects" placeholder="请选择">
+            </el-input>
             <el-button type="primary" @click="showProject">选择项目</el-button>
           </div>
         </el-collapse-item>
@@ -29,13 +30,20 @@
       <Project :selectProject="selectProject" :closed="closed" />
     </el-dialog>
   </div>
+  <div style="height: 300px" class="steps">
+    <el-steps direction="vertical" :active="1">
+      <el-step title="Step 1" />
+      <el-step title="Step 2" />
+      <el-step title="Step 3" />
+    </el-steps>
+  </div>
 </template>
 <script lang='ts'>
 import { defineComponent, reactive, ref } from "vue";
-import { ElDialog, ElButton, ElTable, ElInput, ElForm } from "element-plus";
+import { ElDialog, ElButton, ElInput, ElForm } from "element-plus";
 import Project from "@/components/project/project.vue";
 import ProjectType from "@/components/project/projectType.vue";
-import { projectType } from "@/stype/project";
+import { projectType, dataType } from "@/stype/project";
 export default defineComponent({
   components: {
     Project,
@@ -52,7 +60,7 @@ export default defineComponent({
       projectType: "",
       projectTypeId: 0,
       projectName: "",
-      projectId: "",
+      projectId: 0,
     });
     const showProject = () => {
       dialogVisible.value = true;
@@ -60,10 +68,14 @@ export default defineComponent({
     const closed = () => {
       dialogVisible.value = false;
     };
-    const selectProject = (data: any) => {
+    const selectProject = (data: dataType) => {
+      //名称
+      formData.projectName = data.name;
+      formData.projectId = data.id;
       console.log(data);
     };
     const selectType = (data: projectType) => {
+      //类型
       formData.projectType = data.type;
       formData.projectTypeId = data.id;
     };
@@ -115,6 +127,11 @@ export default defineComponent({
     ::v-deep(.el-collapse-item__header) {
       background: #eceef3;
     }
+  }
+
+  .steps {
+    width: 200px;
+    background: #ff0;
   }
 }
 
