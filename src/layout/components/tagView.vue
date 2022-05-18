@@ -1,45 +1,16 @@
 <template>
   <div class="tagegroup">
-    <svg-icon
-      v-if="sidebarshow"
-      icon-class="expand"
-      class="expand"
-      @click="openSidebar(sidebarshow)"
-    ></svg-icon>
-    <svg-icon
-      v-else
-      icon-class="fold"
-      class="expand"
-      @click="openSidebar(sidebarshow)"
-    ></svg-icon>
-    <transition-group
-      appear
-      name="animate__animated animate__bounce"
-      enter-active-class="animate__lightSpeedInRight"
-      leave-active-class="animate__backOutDown"
-    >
-      <el-check-tag
-        type="plain"
-        style="margin-right: 8px"
-        class="mx-1 tages"
-        v-for="(item, index) in tages"
-        :key="item.path"
-        :checked="item.path === route.fullPath"
-        @click="topath(item.path)"
-      >
+    <svg-icon v-if="sidebarshow" icon-class="expand" class="expand" @click="openSidebar(sidebarshow)"></svg-icon>
+    <svg-icon v-else icon-class="fold" class="expand" @click="openSidebar(sidebarshow)"></svg-icon>
+    <transition-group appear name="animate__animated animate__bounce" enter-active-class="animate__lightSpeedInRight"
+      leave-active-class="animate__backOutDown">
+      <el-check-tag type="plain" style="margin-right: 8px" class="mx-1 tages" v-for="(item, index) in tages"
+        :key="item.path" :checked="item.path === route.fullPath" @click="topath(item.path)">
         <svg-icon icon-class="dot" class="checktd"></svg-icon>
-        <el-tooltip
-          :content="item.meta.title"
-          placement="bottom"
-          effect="customized"
-        >
+        <el-tooltip :content="item.meta.title" placement="bottom" effect="customized">
           {{ item.meta.title }}
         </el-tooltip>
-        <svg-icon
-          icon-class="close"
-          class="closed"
-          @click.stop="closemeu(index)"
-        ></svg-icon>
+        <svg-icon icon-class="close" class="closed" @click.stop="closemeu(index)"></svg-icon>
       </el-check-tag>
     </transition-group>
   </div>
@@ -120,18 +91,19 @@ export default defineComponent({
   position: relative;
   padding-left: 30px;
   height: 40px;
-  margin-bottom: 20px;
   line-height: 40px;
   background: #fff;
   border-bottom: 1px solid #d8dce5;
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.12),
     0px 0px 3px 0 rgba(0, 0, 0, 0.04);
 }
+
 .tages {
   position: relative;
   padding-left: 20px;
   padding-right: 25px;
 }
+
 .expand {
   position: absolute;
   top: 50%;
@@ -142,6 +114,7 @@ export default defineComponent({
   margin-right: 10px;
   cursor: pointer;
 }
+
 .closed {
   position: absolute;
   top: 50%;
@@ -151,6 +124,7 @@ export default defineComponent({
   width: 10px !important;
   border-radius: 10px;
 }
+
 .closed:hover {
   background-color: #fff;
 }

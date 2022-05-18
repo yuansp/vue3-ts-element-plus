@@ -4,13 +4,13 @@
       <topbar-vue />
     </el-header>
     <el-container>
-      <el-aside
-        :class="{ sidebarhide: !sidebarshow, sidebarshow: sidebarshow }"
-      >
+      <el-aside :class="{ sidebarhide: !sidebarshow, sidebarshow: sidebarshow }">
         <sidebar-vue v-show="sidebarshow" />
       </el-aside>
-      <el-main>
-        <tag-view />
+      <el-main class="elmains">
+        <div class="showtages">
+          <tag-view />
+        </div>
         <router-view />
       </el-main>
     </el-container>
@@ -45,6 +45,19 @@ export default defineComponent({
 <style lang="scss" scoped>
 .sidebarhide {
   width: 0px;
+}
+
+.elmains {
+  position: relative;
+  margin-top: 40px;
+  height: calc(100vh - 110px) !important;
+}
+
+.showtages {
+  position: fixed;
+  top: 58px;
+  width: 100%;
+  z-index: 20005;
 }
 
 .sidebarshow {
