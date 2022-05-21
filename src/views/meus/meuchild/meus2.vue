@@ -96,13 +96,9 @@
     </el-dialog>
 
     <!-- 快捷导航 -->
-    <div style="height: 300px" class="steps">
-      <el-steps direction="vertical" space="10%" :active="1">
-        <el-step title="Step 1" @click="steps('1')" />
-        <el-step title="Step 2" @click="steps('2')" />
-        <el-step title="Step 3" @click="steps('3')" />
-      </el-steps>
-    </div>
+    <!-- <div style="height: 300px" class="steps"> -->
+    <steps :lisData="lisData" :styles="styles" />
+    <!-- </div> -->
   </div>
 </template>
 <script lang='ts'>
@@ -110,6 +106,7 @@ import { defineComponent, reactive, ref } from "vue";
 import { ElDialog, ElButton, ElInput, ElForm } from "element-plus";
 import Project from "@/components/project/project.vue";
 import ProjectType from "@/components/project/projectType.vue";
+import steps from '@/components/step/index.vue'
 import { projectType, dataType } from "@/stype/project";
 export default defineComponent({
   components: {
@@ -119,6 +116,7 @@ export default defineComponent({
     ElButton,
     ElInput,
     ElForm,
+    steps
   },
   setup() {
     const dialogVisible = ref(false);
@@ -129,6 +127,13 @@ export default defineComponent({
       projectName: "",
       projectId: 0,
     });
+    const lisData = [
+      { title: '导航一' },
+      { title: '导航2' },
+      { title: '导航3' },
+      { title: '导航4' },
+    ]
+    const styles = '.aaa'
     const showProject = () => {
       dialogVisible.value = true;
     };
@@ -145,20 +150,16 @@ export default defineComponent({
       formData.projectType = data.type;
       formData.projectTypeId = data.id;
     };
-    const steps = (val: string) => {
-      const num = parseInt(val)
-      const elements = document.querySelectorAll('.aaa')
-      elements[num].scrollIntoView()
-    }
     return {
       activeNames,
       dialogVisible,
       formData,
+      lisData,
+      styles,
       closed,
       selectProject,
       showProject,
-      selectType,
-      steps
+      selectType
     };
   },
 });
