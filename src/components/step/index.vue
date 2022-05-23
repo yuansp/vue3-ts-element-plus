@@ -1,25 +1,27 @@
 <template>
   <div class="stepmains">
-    <el-steps direction="vertical" space="20%" :active="1">
-      <el-step v-for="(item, index) in lisData" :key="index" :title="item.title" description="1123"
-        @click="nextSteps(index)" />
-    </el-steps>
+    <div>
+      <div class="rows" v-for="(item, index) in lisData" :key="index" :class="{ 'active': index == active }"
+        @click="nextSteps(index)">
+        <span class="lines"></span>
+        <span class="titles">{{ item.title }}</span>
+      </div>
+    </div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, toRefs } from 'vue'
-import { ElSteps } from 'element-plus'
+import { defineComponent, toRefs, ref, watch } from 'vue'
 import clickStep from './hook'
 export default defineComponent({
-  components: {
-    ElSteps
-  },
   props: ['lisData', 'styles'],
   setup(props) {
+    let active = ref(0)
     const nextSteps = (val: number) => {
+      active.value = val
       clickStep(props.styles, val)
     }
     return {
+      active,
       ...toRefs(props.lisData),
       nextSteps
     }
@@ -32,6 +34,32 @@ export default defineComponent({
   top: 110px;
   right: 10px;
   width: 200px;
-  background: #ff0;
+  // background: #ff0;
+}
+
+.rows {
+  display: flex;
+  height: 30px;
+  cursor: pointer;
+}
+
+.titles {
+  padding-left: 10px;
+  line-height: 30px;
+  color: rgba($color: #000000, $alpha: .5);
+}
+
+.lines {
+  border: 2px solid rgba($color: #000000, $alpha: .3);
+}
+
+.active {
+  .titles {
+    color: rgba(0, 0, 255, 0.672);
+  }
+
+  .lines {
+    border: 2px solid rgba(0, 0, 255, 0.672);
+  }
 }
 </style>

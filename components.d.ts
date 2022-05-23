@@ -36,6 +36,7 @@ declare module '@vue/runtime-core' {
     ProjectType: typeof import('./src/components/project/projectType.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Step: typeof import('./src/components/step/index.vue')['default']
     SVGIcon: typeof import('./src/components/SVGIcon/index.vue')['default']
   }
 }
